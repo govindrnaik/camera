@@ -1,91 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Industrial Camera Dashboard</title>
+    <title>Full Screen Camera Dashboard</title>
     <style>
         body {
-            background-color: #121212;
+            background-color: #000; /* Pure black background */
             color: #ffffff;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
+            padding: 0;
+            height: 100vh; /* Locks body to exact TV height */
+            width: 100vw; /* Locks body to exact TV width */
+            overflow: hidden; /* Prevents scrollbars */
         }
-
-        h1 {
-            text-align: center;
-            margin-top: 0;
-            margin-bottom: 20px;
-            font-size: 24px;
-            color: #00d2ff;
-        }
-
         .camera-grid {
             display: grid;
-            /* Creates a responsive grid that fits as many 300px wide feeds as possible */
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 15px;
+            /* Creates a 4x4 grid to fit up to 16 cameras perfectly */
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            height: 100%;
+            width: 100%;
+            gap: 2px; /* Tiny 2px black border between feeds */
+        }
+        .camera-feed {
+            background-color: #111;
+            position: relative; /* Allows label to overlay the video */
+            display: flex;
+            justify-content: center;
             align-items: center;
         }
-
-        .camera-feed {
-            background-color: #1e1e1e;
-            border: 2px solid #333;
-            border-radius: 8px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .camera-feed img,
-        .camera-feed iframe {
+        .camera-feed img, .camera-feed iframe {
             width: 100%;
-            height: 220px;
-            /* Adjust based on your TV's resolution */
-            object-fit: cover;
+            height: 100%;
+            object-fit: fill; /* Stretches the feed to perfectly fill its grid square */
             border: none;
-            background-color: #000;
         }
-
         .camera-label {
-            padding: 8px;
-            text-align: center;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 4px 8px;
             font-size: 14px;
-            background-color: #2a2a2a;
-            border-top: 1px solid #333;
+            background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+            text-align: left;
+            pointer-events: none; /* Prevents label from blocking clicks */
         }
     </style>
 </head>
-
 <body>
-
-    <h1>Facility Camera Grid</h1>
 
     <div class="camera-grid">
         <div class="camera-feed">
-            <img src="http://192.168.109.6/docs" alt="Camera 1 Feed Offline">
+            <img src="http://192.168.1.22" alt="Camera 1 Offline">
             <div class="camera-label">Camera 1 (Zone A)</div>
         </div>
 
         <div class="camera-feed">
-            <img src="http://192.168.109.6/" alt="Camera 2 Feed Offline">
+            <img src="http://192.168.1.103" alt="Camera 2 Offline">
             <div class="camera-label">Camera 2 (Zone A)</div>
         </div>
 
         <div class="camera-feed">
-            <img src="http://192.168.1.103/video_stream" alt="Camera 3 Feed Offline">
-            <div class="camera-label">Camera 3 (Zone B)</div>
+            <img src="http://192.168.1.22" alt="Camera 3 Offline">
+            <div class="camera-label">Camera 3 (Zone A)</div>
         </div>
 
         <div class="camera-feed">
-            <img src="http://192.168.1.104/video_stream" alt="Camera 4 Feed Offline">
-            <div class="camera-label">Camera 4 (Zone B)</div>
+            <img src="http://192.168.1.103" alt="Camera 4 Offline">
+            <div class="camera-label">Camera 4 (Zone A)</div>
         </div>
-    </div>
+
+        </div>
 
 </body>
-
 </html>
